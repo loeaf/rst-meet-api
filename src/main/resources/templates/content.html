@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="fragments/head :: common"></th:block>
+    <title>공지사항</title>
+</head>
+<body>
+<div style="padding: 50px 0">
+    <div >
+        <a th:href="@{/board}">
+            공지사항
+        </a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">
+            로그인
+        </a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/signUp}">
+            회원가입
+        </a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">
+            로그아웃
+        </a>
+        <span sec:authorize="isAuthenticated()" sec:authentication="principal.username"></span>
+    </div>
+    <div>
+        <div>
+            <a th:text="'글쓴이 : '+${board.user.nickName}"></a>
+            <div>
+                <div th:text="'작성일시 : '+${board.registDt}"></div>
+                <div th:text="'최종 수정일시 : '+${board.updtDt}"></div>
+            </div>
+        </div>
+
+        <div>
+            <p th:text="${board.title}"></p>
+        </div>
+        <div>
+            <p th:text="${board.boardContent.content}"></p>
+        </div>
+    </div>
+    <div>
+        <button id="back">이전으로</button>
+        <form style="display: inline" th:method="DELETE" th:action="@{'/board/' + ${board.id}}"
+              onsubmit="return confirm('정말 삭제하시겠습니까?');">
+            <button type="submit" class="right floated ui red button">삭제</button>
+        </form>
+        <a th:href="@{'/edit/' + ${board.id}}" class="right floated ui button">수정</a>
+    </div>
+</div>
+</body>
+<script>
+    $("#back").click(function () {
+        window.history.back();
+    });
+
+    var urlParams;
+
+    (window.onpopstate = function () {
+        var match,
+            pl = /\+/g,  // Regex for replacing addition symbol with a space
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) {
+                return decodeURIComponent(s.replace(pl, " "));
+            },
+            query = window.location.search.substring(1);
+
+        urlParams = {};
+        while (match = search.exec(query))
+            urlParams[decode(match[1])] = decode(match[2]);
+
+        checkAuthError();
+    })();
+
+    function checkAuthError() {
+        if (urlParams["auth-error"]) {
+            alert("권한이 없습니다.")
+        }
+    }
+</script>
+</html>

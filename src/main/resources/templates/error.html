@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="fragments/head :: common"></th:block>
+    <title>공지사항</title>
+</head>
+<body>
+    <div>알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.</div>
+    <p th:if="${errMessage != null} th:text=${errMessage.message}"></p>
+<a href="/">메인페이지로 돌아가기</a>
+</body>
+</html>

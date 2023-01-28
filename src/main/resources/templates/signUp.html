@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html  lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="fragments/head :: common"></th:block>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>회원가입</title>
+</head>
+<body>
+    <div class="content" style="color: black">
+        회원가입 정보를 입력하세요.
+    </div>
+    <form th:action="@{/users}" id="userForm" class="ui large form" th:method="POST" onsubmit="return checkForm();">
+        <div th:if="${duplicationStr != null}" class="ui tiny negative message">
+            <div class="header">이미 사용 중인 값입니다.</div>
+            <p th:text="${duplicationStr}"></p>
+        </div>
+        <div class="ui stacked segment">
+            <div class="field">
+                <label style="float:left">이메일 주소</label>
+                <div class="ui left icon input">
+                    <input type="email" name="email" placeholder="이메일 주소" required
+                           th:value="${user == null} ? '' : ${user.email}">
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label style="float:left">비밀번호</label>
+                    <div class="ui left icon input">
+                        <input type="password" placeholder="비밀번호" name="password"
+                               id="password" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label style="float:left">비밀번호 확인</label>
+                    <div class="ui left icon input">
+                        <input type="password" placeholder="비밀번호 확인" name="passwordCheck"
+                               id="passwordCheck" required>
+                    </div>
+                </div>
+            </div>
+            <div id="passwordError"></div>
+            <div>
+
+            </div>
+            <div class="field">
+                <label style="float:left">닉네임</label>
+                <div class="ui left icon input">
+                    <input type="text" placeholder="닉네임" name="nickName" required
+                           th:value="${user == null} ? '' : ${user.nickName}">
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <button class="ui fluid large secondary submit button">회원가입</button>
+                </div>
+                <div class="field">
+                    <a class="ui fluid large button" style="float:right" href="/">취소</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+<script>
+    var isValidForm = true;
+    $("#passwordCheck, #password").keyup(function () {
+        if ($("#password").val() != $("#passwordCheck").val()) {
+            $('#passwordError').html("<div class=\"ui negative mini message\">" +
+                "비밀번호와 비밀번호 확인이 같지 않습니다." +
+                "</div>");
+            isValidForm = false;
+            return;
+        }
+
+        if ($("#password").val().length < 4) {
+            $('#passwordError').html("<div class=\"ui negative mini message\">" +
+                "비밀번호는 최소 4글자 이상 입력해주세요." +
+                "</div>");
+            isValidForm = false;
+            return;
+        }
+
+        isValidForm = true;
+        $('#passwordError').html("");
+    });
+
+    function checkForm() {
+        if (!isValidForm) {
+            alert("회원가입의 입력란을 확인해주세요.")
+            return false;
+        }
+    };
+</script>
+</html>

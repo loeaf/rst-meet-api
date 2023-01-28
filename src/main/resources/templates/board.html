@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="fragments/head :: common"></th:block>
+    <title>공지사항</title>
+</head>
+<body class="ui grid">
+<div style="padding: 50px 0">
+    <a th:href="@{/board}" class="active item">
+        공지사항
+    </a>
+    <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="item">
+        로그인
+    </a>
+    <a sec:authorize="!isAuthenticated()" th:href="@{/users}" class="item">
+        회원가입
+    </a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="item">
+        로그아웃
+    </a>
+    <span sec:authorize="isAuthenticated()" sec:authentication="principal.username" class="right item"></span>
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>작성일자</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${boardPage.content}">
+            <td th:text="${board.id}"></td>
+            <td class="center aligned">
+                <a th:href="@{'/board/'+${board.id}}" th:text="${board.title}"></a>
+            </td>
+            <td th:text="${board.user.nickName}"></td>
+            <td th:text="${board.registDt}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:href="@{/edit}" class="">글쓰기</a>
+    </div>
+
+    <div class="">
+        <th:block th:if="${pageInfo.previousPaging != null}">
+            <div>
+                <a th:href="@{/board(page=1)}">첫페이지</a>
+            </div>
+            <div>
+                <a th:href="@{/board(page=${pageInfo.previousPaging} + 1)}"><i class="angle double left icon"></i></a>
+            </div>
+        </th:block>
+
+        <th:block th:each="i: ${#numbers.sequence(pageInfo.startPageNum, pageInfo.lastPageNum)}">
+            <div th:if="${boardPage.number == i}">[[${i}+1]]</div>
+            <div th:unless="${boardPage.number == i}">
+                <a th:href="@{/board(page=${i}+1)}">[[${i}+1]]</a>
+            </div>
+        </th:block>
+        <th:block th:if="${pageInfo.nextPaging != null}">
+            <div>
+                <a th:href="@{/board(page=${pageInfo.nextPaging} + 1)}"></a>
+            </div>
+            <div>
+                <a th:href="@{/board(page=${boardPage.totalPages})}">끝페이지</a>
+            </div>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

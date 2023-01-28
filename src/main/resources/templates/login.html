@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html  lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="fragments/head :: common"></th:block>
+    <title>로그인</title>
+</head>
+<body>
+<div class="content" style="color: black">
+    로그인 정보를 입력하세요.
+</div>
+<th:block th:if="${param.error}">
+    <p style="color: red">
+        이메일이나 패스워드가 맞지 않습니다.
+    </p>
+</th:block>
+
+<form method="POST" th:action="@{/login}" class="ui large form">
+    <p th:if="[SPRING_SECURITY_LAST_EXCEPTION]"></p>
+    <input type="email" name="username" id="inputUsernameEmail" placeholder="이메일 주소" required>
+    <input type="password" name="password"  id="inputPassword" placeholder="비밀번호" required>
+    <button type="submit" class="ui fluid large secondary submit button">로그인</button>
+    <a class="ui fluid large button" style="float:right" th:href="@{'/'}">취소</a>
+    <div class="ui message">
+        로그인 아이디가 없으신가요? <a th:href="@{/users}">회원가입</a>
+    </div>
+</form>
+</body>
+</html>
