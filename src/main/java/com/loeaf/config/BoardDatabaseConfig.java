@@ -23,7 +23,7 @@ import javax.sql.DataSource;
  */
 @Slf4j
 @Configuration
-@MapperScan(value="com.loeaf", annotationClass = BoardConnMapper.class, sqlSessionFactoryRef = "boardSqlSessionFactory")
+@MapperScan(value="com.loeaf.common.conn", sqlSessionFactoryRef = "boardSqlSessionFactory")
 @EnableTransactionManagement
 public class BoardDatabaseConfig {
 
