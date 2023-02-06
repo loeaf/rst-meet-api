@@ -88,7 +88,7 @@ public class CmmnCodeRestController {
     // FOODTYPE POST
     @GetMapping("/FOODTYPE")
     @ApiOperation(value = "음식종류 등록")
-public ResponseEntity<Object> registFoodType(HttpServletRequest request) throws Exception {
+    public ResponseEntity<Object> registFoodType(HttpServletRequest request) throws Exception {
         CmmnCode cd = new CmmnCode();
         cd.setId("FOODTYPE");
         cd.setCodeName("FOODTYPE");

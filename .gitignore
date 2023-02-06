@@ -33,3 +33,4 @@ build/
 .vscode/
 /src/main/resources/application.*
 application.properties
+sejong_rst_meet.csv

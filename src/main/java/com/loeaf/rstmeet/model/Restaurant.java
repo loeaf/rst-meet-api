@@ -28,7 +28,10 @@ public class Restaurant {
     private String jibunAddress;
     // 영어주소
     @Column
-    private Long englishAddress;
+    private String englishAddress;
+    // 요약주소
+    @Column
+    private String miniAddress;
     // 위도
     @Column
     private Long latitude;

@@ -1,17 +1,14 @@
 package com.loeaf.siginin.config;
 
-import com.loeaf.siginin.types.Authority;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 @Configuration
@@ -20,25 +17,31 @@ import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/users").permitAll()
-                .antMatchers(HttpMethod.GET,"/board/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/boardRest/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/CmmnCode/**").permitAll()
-                .antMatchers("/edit").hasRole(Authority.USER.name())
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .loginProcessingUrl("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-                .permitAll();
+        http.authorizeRequests()
+                .antMatchers("/", "/**/*").permitAll();
+//                .authorizeRequests()
+//                .antMatchers("/", "/users").permitAll()
+//                .antMatchers(HttpMethod.GET,"/board/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/boardRest/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/CmmnCode/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/Restaurant/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/Media/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/ReView/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/TasteRoom/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/UserAccount/**").permitAll();
+//                .antMatchers("/edit").hasRole(Authority.USER.name())
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .failureUrl("/login?error=true")
+//                .loginProcessingUrl("/login")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                .logoutSuccessUrl("/")
+//                .permitAll();
     }
 
     @Override
