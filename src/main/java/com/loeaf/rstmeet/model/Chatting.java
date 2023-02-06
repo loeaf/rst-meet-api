@@ -13,5 +13,5 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Chatting {
     @Id
-    private String Id;
+    private String id;
 }

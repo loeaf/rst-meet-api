@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/users").permitAll()
                 .antMatchers(HttpMethod.GET,"/board/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/boardRest/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/CmmnCode/**").permitAll()
                 .antMatchers("/edit").hasRole(Authority.USER.name())
                 .anyRequest().authenticated()
                 .and()
