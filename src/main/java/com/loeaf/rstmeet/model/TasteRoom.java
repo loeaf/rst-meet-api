@@ -6,10 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity(name = "TasteRoom")
@@ -33,11 +31,14 @@ public class TasteRoom {
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
-    private User joinAccountId;
+    private User joinId;
 
     // 챗팅방내용
     private String content;
 
     // 챗팅방생성일
     private String createDate;
+
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Chatting> chattings;
 }
