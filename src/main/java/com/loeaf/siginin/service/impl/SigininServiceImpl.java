@@ -1,12 +1,15 @@
 package com.loeaf.siginin.service.impl;
 
-import com.loeaf.siginin.domain.Role;
-import com.loeaf.siginin.domain.User;
+import com.loeaf.siginin.dto.param.UserParam;
 import com.loeaf.siginin.exception.DuplicateDataException;
-import com.loeaf.siginin.repository.UserRepository;
+import com.loeaf.siginin.model.Account;
+import com.loeaf.siginin.model.Role;
+import com.loeaf.siginin.model.User;
+import com.loeaf.siginin.service.AccountService;
 import com.loeaf.siginin.service.RoleService;
 import com.loeaf.siginin.service.SigininService;
 import com.loeaf.siginin.service.UserService;
+import com.loeaf.siginin.types.AccountType;
 import com.loeaf.siginin.types.Authority;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -24,44 +27,37 @@ public class SigininServiceImpl implements SigininService {
     @Autowired
     final UserService userService;
     @Autowired
+    final AccountService accountService;
+    @Autowired
     final RoleService roleService;
     final PasswordEncoder passwordEncoder;
 
 
-    public User save(User user) {
-        checkDuplication(user);
-        encodePassword(user);
-        setRoles(user);
-        return userService.regist(user);
+    public User save(UserParam userParam) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        checkDuplication(userParam);
+        User user = new User();
+        Account account = new Account();
+        account.setPassword(passwordEncoder.encode(userParam.getPassword()));
+        Role role = new Role();
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleService.findByBizKey(Role.builder().authority(Authority.USER).build()));
+        user.setRoles(roles);
+        var userObj = userService.regist(user);
+        var accountObj = accountService.regist(account);
+        return userObj;
     }
 
     @SneakyThrows
-    private void checkDuplication(User user) {
-        var existsEmail = userService.findByBizKey(User.builder().email(user.getEmail()).build());
+    private void checkDuplication(UserParam userParam) {
+        AccountType accountType = AccountType.valueOf(userParam.getAccountType());
+        Account existsEmail = accountService.findByLoginIdAndType(userParam.getLoginId(), accountType);
         if (existsEmail != null) {
-            throw new DuplicateDataException(user.getEmail());
+            throw new DuplicateDataException(existsEmail.toString());
         }
+        User user = userService.findByNickName(userParam.getNickName());
         var existsNick = userService.findByNickName(user.getNickName());
         if (existsNick != null) {
-            throw new DuplicateDataException(user.getEmail());
+            throw new DuplicateDataException(user.toString());
         }
-    }
-
-    private void encodePassword(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-    }
-
-    private void setRoles(User user) {
-        Set<Role> roles = new HashSet<>();
-        try {
-            roles.add(roleService.findByBizKey(Role.builder().authority(Authority.USER).build()));
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        user.setRoles(roles);
     }
 }

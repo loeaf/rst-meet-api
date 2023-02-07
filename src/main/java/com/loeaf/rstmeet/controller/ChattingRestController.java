@@ -29,6 +29,7 @@ public class ChattingRestController {
     @PostMapping()
     @ApiOperation(value = "등록")
     public ResponseEntity<Object> regist(HttpServletRequest request, @RequestBody Object dto) throws Exception {
+//        service.regist(dto);
         return null;
     }
 }

@@ -2,7 +2,7 @@ package com.loeaf.board.domain;
 
 import com.loeaf.common.domain.Domain;
 import com.loeaf.common.misc.BizField;
-import com.loeaf.siginin.domain.User;
+import com.loeaf.siginin.model.User;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

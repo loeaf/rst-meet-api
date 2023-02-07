@@ -12,7 +12,7 @@ import com.loeaf.common.misc.Paginator;
 import com.loeaf.common.misc.PaginatorInfo;
 import com.loeaf.file.domain.FileInfo;
 import com.loeaf.file.service.FileInfoService;
-import com.loeaf.siginin.domain.User;
+import com.loeaf.siginin.model.User;
 import com.loeaf.siginin.util.UserInfoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

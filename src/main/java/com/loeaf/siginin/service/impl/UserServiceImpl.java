@@ -1,8 +1,7 @@
 package com.loeaf.siginin.service.impl;
 
-import com.loeaf.board.domain.Board;
 import com.loeaf.common.misc.ServiceImpl;
-import com.loeaf.siginin.domain.User;
+import com.loeaf.siginin.model.User;
 import com.loeaf.siginin.repository.UserRepository;
 import com.loeaf.siginin.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,7 @@ import javax.annotation.PostConstruct;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl
-        extends ServiceImpl<UserRepository, User, Long>
+        extends ServiceImpl<UserRepository, User, String>
         implements UserService {
     private final UserRepository userRepository;
 
@@ -22,7 +21,7 @@ public class UserServiceImpl
         super.set(userRepository, new User());
     }
     @Override
-    public Boolean findByNickName(String nickName) {
+    public User findByNickName(String nickName) {
         return userRepository.findByNickName(nickName);
     }
 }

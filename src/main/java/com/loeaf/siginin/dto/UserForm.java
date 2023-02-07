@@ -1,4 +1,4 @@
-package com.loeaf.siginin.model;
+package com.loeaf.siginin.dto;
 
 import lombok.Getter;
 import lombok.Setter;

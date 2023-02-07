@@ -12,7 +12,7 @@ import java.util.Collection;
 @Getter
 @Setter
 public class CustomUserInfo extends User {
-    private Long id;
+    private String id;
     private String nickName;
 
     public CustomUserInfo(String email, String password, Collection<? extends GrantedAuthority> authorities) {

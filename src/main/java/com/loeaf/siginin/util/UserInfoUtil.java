@@ -1,15 +1,12 @@
 package com.loeaf.siginin.util;
 
-import com.loeaf.siginin.domain.User;
+import com.loeaf.siginin.model.User;
 import com.loeaf.siginin.security.CustomUserInfo;
 import com.loeaf.siginin.service.UserService;
-import com.loeaf.siginin.service.impl.UserServiceImpl;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 

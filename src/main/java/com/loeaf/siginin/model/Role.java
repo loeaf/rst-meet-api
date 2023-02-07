@@ -1,4 +1,4 @@
-package com.loeaf.siginin.domain;
+package com.loeaf.siginin.model;
 
 import com.loeaf.common.domain.Domain;
 import com.loeaf.common.misc.BizField;

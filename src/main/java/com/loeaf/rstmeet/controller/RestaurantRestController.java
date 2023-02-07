@@ -1,11 +1,13 @@
 package com.loeaf.rstmeet.controller;
 
+import com.loeaf.rstmeet.dto.params.RestaurantParam;
 import com.loeaf.rstmeet.service.RestaurantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,16 +22,14 @@ public class RestaurantRestController {
         this.service = service;
     }
 
-    @GetMapping("")
+    @GetMapping()
     @ApiOperation(value = "기본 전체목록")
-    public ResponseEntity<Object> findAll(HttpServletRequest request, Pageable pageable) throws Exception {
-        return null;
-    }
-
-    @PostMapping()
-    @ApiOperation(value = "등록")
-    public ResponseEntity<Object> regist(HttpServletRequest request, @RequestBody Object dto) throws Exception {
-        return null;
+    public ResponseEntity<Object> findAll(HttpServletRequest request, RestaurantParam params) throws Exception {
+        if (params.getId() != null) {
+            return ResponseEntity.ok(service.findById(params.getId()));
+        } else {
+            return ResponseEntity.ok(service.findAll());
+        }
     }
 
     // bulk insert
