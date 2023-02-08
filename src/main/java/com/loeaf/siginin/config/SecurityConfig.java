@@ -17,7 +17,7 @@ import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/", "/**/*").permitAll();
 //                .authorizeRequests()
 //                .antMatchers("/", "/users").permitAll()
@@ -46,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/webjars/**","/**.ico", "/**.jpg", "/**.png");
+        web.ignoring()
+                .antMatchers("/resources/**", "/static/**", "/webjars/**","/**.ico", "/**.jpg", "/**.png");
     }
 
     @Bean

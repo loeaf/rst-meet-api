@@ -1,6 +1,7 @@
 package com.loeaf.rstmeet.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.loeaf.siginin.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,10 @@ public class Chatting {
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
     private TasteRoom tasteRoom;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
+    private User user;
 
 }
