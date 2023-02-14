@@ -17,6 +17,9 @@ import java.util.List;
 public class Restaurant {
     @Id
     private String id;
+    // 맛집번호
+    @Column
+    private Integer restaurantNumber;
     // 맛집명
     @Column
     private String name;
@@ -71,4 +74,7 @@ public class Restaurant {
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Media> mediaList;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Menu> menus;
 }

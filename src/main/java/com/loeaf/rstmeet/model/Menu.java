@@ -1,40 +1,52 @@
 package com.loeaf.rstmeet.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.loeaf.siginin.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
-@Entity(name = "ReView")
+@Entity(name = "Menu")
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReView {
+public class Menu {
     @Id
     private String id;
 
-    // 내용
+    // 메뉴이름
     @Column
-    private String content;
+    private String name;
 
-    // 등록일
+    // 메뉴가격
     @Column
-    private String regDate;
+    private String price;
 
-    // 리뷰종류
+    // 메뉴사진
+    @Column
+    private String photoUrl;
+
+    // 메뉴설명
+    @Column
+    private String description;
+
+    // 메뉴종류
     @Column
     private String type;
 
-    // 대표리뷰여부
+    // 등록일
+    @Column
+    private Date regDate;
+
+    // 대표메뉴여부
     @Column
     private String isMain;
 
-    // 작성자
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
-    private Account writer;
+    private Restaurant restaurant;
+
 }

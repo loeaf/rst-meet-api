@@ -4,16 +4,18 @@ package com.loeaf.file.service.impl;
 import com.loeaf.common.misc.DateUtils;
 import com.loeaf.common.misc.FileUtiles;
 import com.loeaf.common.misc.ServiceImpl;
+import com.loeaf.config.S3Config;
 import com.loeaf.file.domain.FileInfo;
-import com.loeaf.file.persistence.FileInfoMapper;
 import com.loeaf.file.persistence.FileInfoRepository;
 import com.loeaf.file.service.FileInfoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,11 @@ public class FileInfoServiceImpl
 
     @Value("${app.file.upload.path}")
     private String fileUploadPath = "";
+
+
+    // S3 Config
+    @Autowired
+    private S3Config s3Config;
 
     @PostConstruct
     private void init() {
@@ -106,4 +113,18 @@ public class FileInfoServiceImpl
         }
         return files;
     }
+
+    @Override
+    public void sendS3Files() throws IOException {
+        if(true) {
+
+        } else {
+            System.getProperty("user.home");
+        }
+        File file = new File("C:\\Users\\break8524\\Desktop\\test.txt");
+        file.createNewFile();
+//        AmazonS3Client s3Client = s3Config.amazonS3Client();
+//        s3Client.putObject("bucket", file.getName(), file);
+    }
+
 }

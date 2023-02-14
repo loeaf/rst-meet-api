@@ -1,5 +1,6 @@
 package com.loeaf.rstmeet.controller;
 
+import com.loeaf.file.service.FileInfoService;
 import com.loeaf.rstmeet.model.CmmnCode;
 import com.loeaf.rstmeet.service.CmmnCodeService;
 import com.loeaf.rstmeet.type.CityType;
@@ -21,11 +22,20 @@ import java.beans.Transient;
 public class CmmnCodeRestController {
 
     private CmmnCodeService service;
+    private FileInfoService fileInfoServiceImpl;
 
-    public CmmnCodeRestController(CmmnCodeService service) {
+    public CmmnCodeRestController(CmmnCodeService service, FileInfoService fileInfoServiceImpl) {
         this.service = service;
+        this.fileInfoServiceImpl = fileInfoServiceImpl;
     }
 
+    // get send fileinfo service
+    @GetMapping("/fileUpload")
+    @ApiOperation(value = "음식 목록")
+    public ResponseEntity<Object> findFood(HttpServletRequest request) throws Exception {
+        fileInfoServiceImpl.sendS3Files();
+        return ResponseEntity.ok(null);
+    }
 
     // find city by service
     @GetMapping("/getCity")
