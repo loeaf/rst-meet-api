@@ -50,7 +50,7 @@ public class MenuServiceImpl
             menu.setName(p.getName());
             menu.setRestaurant(restaurantObj);
             menu.setMenuType(menuObj);
-            menu.setPhotoUrl(null);
+            menu.setPhotoUrl(p.getPhotoUrl());
             menu.setPrice(p.getPrice());
             menu.setIsMain(p.getIsMain());
             menu.setRegDate(new Date());
@@ -61,7 +61,7 @@ public class MenuServiceImpl
     private List<MenuFile> readCSVByClassPath() throws FileNotFoundException {
         List<MenuFile> rstMeetFileList = new ArrayList<>();
         BufferedReader br = null;
-        File file = ResourceUtils.getFile("src/main/resources/static/file/sejong_rst_menu.csv");
+        File file = ResourceUtils.getFile("src/main/resources/static/file/sejong_rst_meet_menu.csv");
         if (file.exists()) {
             System.out.println("file exists");
         } else {
@@ -71,7 +71,12 @@ public class MenuServiceImpl
         try{
             br = new BufferedReader(new InputStreamReader(targetStream, "UTF-8"));
             String line = "";
+            int i = 0;
             while((line = br.readLine()) != null){
+                if(i == 0){
+                    i++;
+                    continue;
+                }
                 //CSV 1행을 저장하는 리스트
                 List<String> tmpList = new ArrayList<String>();
                 String array[] = line.split(",");

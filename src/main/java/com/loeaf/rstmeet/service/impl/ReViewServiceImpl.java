@@ -44,6 +44,7 @@ public class ReViewServiceImpl
             review.setContent(p.getContent());
             review.setIsMain(p.getIsMain());
             review.setRegDate(new Date());
+            review.setRestaurant(restaurantObj);
             this.jpaRepo.save(review);
         });
     }
@@ -51,7 +52,7 @@ public class ReViewServiceImpl
     private List<ReviewFile> readCSVByClassPath() throws FileNotFoundException {
         List<ReviewFile> reviewFileList = new ArrayList<>();
         BufferedReader br = null;
-        File file = ResourceUtils.getFile("src/main/resources/static/file/sejong_rst_review.csv");
+        File file = ResourceUtils.getFile("src/main/resources/static/file/sejong_rst_meet_review.csv");
         if (file.exists()) {
             System.out.println("file exists");
         } else {
@@ -61,7 +62,12 @@ public class ReViewServiceImpl
         try{
             br = new BufferedReader(new InputStreamReader(targetStream, "UTF-8"));
             String line = "";
+            int i = 0;
             while((line = br.readLine()) != null){
+                i++;
+                if (i == 1) {
+                    continue;
+                }
                 //CSV 1행을 저장하는 리스트
                 List<String> tmpList = new ArrayList<String>();
                 String array[] = line.split(",");

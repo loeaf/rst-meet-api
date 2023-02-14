@@ -56,7 +56,6 @@ public class Restaurant {
     // 대표메뉴
     @Column
     private String representativeMenu;
-    // 음식종류
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
@@ -73,8 +72,11 @@ public class Restaurant {
     private CmmnCode cityType;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Media> mediaList;
+    private List<Media> medias;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Menu> menus;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReView> reViews;
 }

@@ -11,6 +11,7 @@ import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,13 +35,14 @@ public class RestaurantServiceImpl
         rstMeetFileList.forEach(p -> {
             var rst = new Restaurant();
             rst.setId(UUID.randomUUID().toString());
+            rst.setRestaurantNumber(p.getRstMeetFileNumber());
             rst.setName(p.getRestaurant());
-            rst.setRoadAddress(null);
-            rst.setJibunAddress(null);
-            rst.setEnglishAddress(null);
+            rst.setRoadAddress(p.getKoreanRoadAddress());
+            rst.setJibunAddress(p.getKoreanJibunAddress());
+            rst.setEnglishAddress(p.getEnglishAddress());
             rst.setMiniAddress(p.getArea());
-            rst.setLatitude(null);
-            rst.setLongitude(null);
+            rst.setLatitude(new BigDecimal(p.getLat()).longValue());
+            rst.setLongitude(new BigDecimal(p.getLog()).longValue());
             rst.setGeoInfo(null);
             rst.setRegDate(new Date());
             rst.setPhoneNumber(p.getPhoneNumber());
@@ -65,17 +67,29 @@ public class RestaurantServiceImpl
             br = new BufferedReader(new InputStreamReader(targetStream, "UTF-8"));
             //Charset.forName("UTF-8");
             String line = "";
+            int idx = 0;
             while((line = br.readLine()) != null){
+                if(idx == 0){
+                    idx++;
+                    continue;
+                }
                 //CSV 1행을 저장하는 리스트
                 List<String> tmpList = new ArrayList<String>();
                 String array[] = line.split(",");
                 var rstMeetFile = new RstMeetFile();
-                rstMeetFile.setCategory(array[0]);
-                rstMeetFile.setArea(array[1]);
-                rstMeetFile.setRestaurant(array[2]);
-                rstMeetFile.setRepresentativeMenu(array[3]);
-                rstMeetFile.setHoliday(array[4]);
-                rstMeetFile.setPhoneNumber(array[5]);
+                rstMeetFile.setRstMeetFileNumber(Integer.parseInt(array[0]));
+                rstMeetFile.setCategory(array[1]);
+                rstMeetFile.setArea(array[2]);
+                rstMeetFile.setRestaurant(array[3]);
+                rstMeetFile.setRepresentativeMenu(array[4]);
+                rstMeetFile.setHoliday(array[5]);
+                rstMeetFile.setPhoneNumber(array[6]);
+                rstMeetFile.setKoreanRoadAddress(array[7]);
+                rstMeetFile.setKoreanJibunAddress(array[8]);
+                rstMeetFile.setEnglishAddress(array[9]);
+                rstMeetFile.setSpecAddr(array[10]);
+                rstMeetFile.setLog(array[11]);
+                rstMeetFile.setLat(array[12]);
                 System.out.println(rstMeetFile.toString());
                 rstMeetFileList.add(rstMeetFile);
             }

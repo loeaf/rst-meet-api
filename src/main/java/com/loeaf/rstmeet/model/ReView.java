@@ -34,4 +34,10 @@ public class ReView {
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
     private Account writer;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
+    private Restaurant restaurant;
+
 }
