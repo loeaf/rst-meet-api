@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CmmnCodeRepository extends JpaRepository<CmmnCode, String> {
     List<CmmnCode> findCmmnCodeByParentCode(CmmnCode cd);
+
+    CmmnCode findByCodeName(String menuType);
 }

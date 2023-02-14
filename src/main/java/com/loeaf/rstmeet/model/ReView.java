@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity(name = "ReView")
@@ -22,11 +23,7 @@ public class ReView {
 
     // 등록일
     @Column
-    private String regDate;
-
-    // 리뷰종류
-    @Column
-    private String type;
+    private Date regDate;
 
     // 대표리뷰여부
     @Column

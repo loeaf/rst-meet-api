@@ -31,4 +31,7 @@ public class CmmnCode {
 
     @OneToMany(mappedBy = "cityType", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Restaurant> cityList;
+
+    @OneToMany(mappedBy = "menuType", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Menu> menuList;
 }

@@ -33,8 +33,10 @@ public class Menu {
     private String description;
 
     // 메뉴종류
-    @Column
-    private String type;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
+    private CmmnCode menuType;
 
     // 등록일
     @Column

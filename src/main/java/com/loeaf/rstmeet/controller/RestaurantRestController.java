@@ -31,12 +31,4 @@ public class RestaurantRestController {
             return ResponseEntity.ok(service.findAll());
         }
     }
-
-    // bulk insert
-    @GetMapping("/TEST")
-    @ApiOperation(value = "등록")
-    public ResponseEntity<Object> bulk(HttpServletRequest request) throws Exception {
-        this.service.registBulkByCSV();
-        return null;
-    }
 }
