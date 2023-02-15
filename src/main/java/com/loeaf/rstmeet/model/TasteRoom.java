@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -37,7 +38,7 @@ public class TasteRoom {
     private String content;
 
     // 챗팅방생성일
-    private String createDate;
+    private Date createDate;
 
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chatting> chattings;
