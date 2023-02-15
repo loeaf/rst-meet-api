@@ -14,6 +14,8 @@ public class MenuFile {
     private String name;
     // 메뉴종류
     private String menuType;
+    // 메뉴량
+    private String menuAmount;
     // 메뉴가격
     private String price;
     // 메뉴사진

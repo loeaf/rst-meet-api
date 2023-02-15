@@ -1,5 +1,6 @@
 package com.loeaf.rstmeet.controller;
 
+import com.loeaf.rstmeet.dto.ResResult;
 import com.loeaf.rstmeet.dto.params.RestaurantParam;
 import com.loeaf.rstmeet.service.RestaurantService;
 import io.swagger.annotations.Api;
@@ -24,11 +25,14 @@ public class RestaurantRestController {
 
     @GetMapping()
     @ApiOperation(value = "기본 전체목록")
-    public ResponseEntity<Object> findAll(HttpServletRequest request, RestaurantParam params) throws Exception {
+    public ResponseEntity<ResResult> findAll(HttpServletRequest request, RestaurantParam params) throws Exception {
+        ResResult resResult = new ResResult();
         if (params.getId() != null) {
-            return ResponseEntity.ok(service.findById(params.getId()));
+            resResult.setData(service.findById(params.getId()));
+            return ResponseEntity.ok(resResult);
         } else {
-            return ResponseEntity.ok(service.findAll());
+            resResult.setData(service.findAll());
+            return ResponseEntity.ok(resResult);
         }
     }
 }

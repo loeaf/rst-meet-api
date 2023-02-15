@@ -20,6 +20,10 @@ public class Menu {
     @Column
     private String name;
 
+    // 메뉴량
+    @Column
+    private String menuAmount;
+
     // 메뉴가격
     @Column
     private String price;

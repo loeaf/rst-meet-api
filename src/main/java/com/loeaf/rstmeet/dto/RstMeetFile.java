@@ -33,5 +33,4 @@ public class RstMeetFile {
     private String lat;
     // 경도
     private String log;
-
 }

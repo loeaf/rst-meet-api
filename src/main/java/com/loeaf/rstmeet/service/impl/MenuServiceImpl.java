@@ -47,6 +47,7 @@ public class MenuServiceImpl
             Restaurant restaurantObj = restaurantRepository.findByRestaurantNumber(p.getRestaurantId());
             CmmnCode menuObj = cmmnCodeRepository.findByCodeName(p.getMenuType());
             menu.setId(UUID.randomUUID().toString());
+            menu.setMenuAmount(p.getMenuAmount());
             menu.setName(p.getName());
             menu.setRestaurant(restaurantObj);
             menu.setMenuType(menuObj);
@@ -85,16 +86,18 @@ public class MenuServiceImpl
                 rstMeetFile.setRestaurantId(Integer.parseInt(array[0]));
                 // 메뉴이름
                 rstMeetFile.setName(array[1]);
-                // 메뉴종류
-                rstMeetFile.setMenuType(array[2]);
+                // 메뉴량
+                rstMeetFile.setMenuAmount(array[2]);
                 // 메뉴가격
                 rstMeetFile.setPrice(array[3]);
                 // 메뉴사진
                 rstMeetFile.setPhotoUrl(array[4]);
                 // 메뉴설명
                 rstMeetFile.setDescription(array[5]);
+                // 메뉴종류
+                rstMeetFile.setMenuType(array[6]);
                 // 대표메뉴여부
-                rstMeetFile.setIsMain(array[6]);
+                rstMeetFile.setIsMain(array[7]);
                 System.out.println(rstMeetFile.toString());
                 rstMeetFileList.add(rstMeetFile);
             }
