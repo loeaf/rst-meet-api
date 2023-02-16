@@ -7,6 +7,7 @@ import com.loeaf.rstmeet.repository.RestaurantRepository;
 import com.loeaf.rstmeet.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
@@ -30,9 +31,11 @@ public class RestaurantServiceImpl
     }
 
     @Override
+    @Transactional
     public void registBulkByCSV() throws FileNotFoundException {
         List<RstMeetFile> rstMeetFileList = this.readCSVByClassPath();
         rstMeetFileList.forEach(p -> {
+            System.out.println(p.toString());
             var rst = new Restaurant();
             rst.setId(UUID.randomUUID().toString());
             rst.setRestaurantNumber(p.getRstMeetFileNumber());

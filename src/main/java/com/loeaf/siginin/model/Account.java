@@ -2,6 +2,7 @@ package com.loeaf.siginin.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.loeaf.rstmeet.model.ReView;
+import com.loeaf.rstmeet.model.TasteRoomMember;
 import com.loeaf.siginin.types.AccountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,4 +33,7 @@ public class Account {
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReView> reViews;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TasteRoomMember> attendantTasteRooms;
 }

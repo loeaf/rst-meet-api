@@ -28,10 +28,10 @@ public class User {
 //            inverseJoinColumns = @JoinColumn(name = "role_id"))
 //    private Set<Role> roles;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TasteRoom> userId;
 
-    @OneToMany(mappedBy = "joinId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "join", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TasteRoom> joinId;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

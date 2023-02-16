@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,18 +22,18 @@ public class TasteRoom {
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
-    private Restaurant restaurantId;
+    private Restaurant restaurant;
     // 생성계정
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
-    private User userId;
+    private User user;
 
     // 참여계정
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
-    private User joinId;
+    private User join;
 
     // 챗팅방내용
     private String content;
@@ -46,6 +47,9 @@ public class TasteRoom {
     // 챗팅방생성일
     private Date createDate;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Chatting> chattings;
+    @OneToMany(mappedBy = "tasteRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Chatting> chattings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tasteRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TasteRoomMember> attendantMembers = new ArrayList<>();
 }

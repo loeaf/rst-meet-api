@@ -7,5 +7,5 @@ import com.loeaf.rstmeet.model.TasteRoom;
 import java.util.List;
 
 public interface TasteRoomService extends Service<TasteRoom, String> {
-    List<TasteRoom> findByRestaurantId(Restaurant restaurant);
+    List<TasteRoom> findByRestaurant(Restaurant restaurant);
 }

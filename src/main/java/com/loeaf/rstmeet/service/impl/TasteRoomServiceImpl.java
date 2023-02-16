@@ -24,7 +24,7 @@ public class TasteRoomServiceImpl
     }
 
     @Override
-    public List<TasteRoom> findByRestaurantId(Restaurant restaurant) {
-        return this.jpaRepo.findByRestaurantId(restaurant);
+    public List<TasteRoom> findByRestaurant(Restaurant restaurant) {
+        return this.jpaRepo.findByRestaurant(restaurant);
     }
 }
