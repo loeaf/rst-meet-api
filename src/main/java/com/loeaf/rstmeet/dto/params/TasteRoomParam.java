@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class TasteRoomParam {
     String restaurantId;
     String content;
+    String meetPaymentType;
+    Integer peopleNum;
 }

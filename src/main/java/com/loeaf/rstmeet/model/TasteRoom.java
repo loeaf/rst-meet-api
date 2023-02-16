@@ -37,6 +37,12 @@ public class TasteRoom {
     // 챗팅방내용
     private String content;
 
+    // 참여인원
+    private Integer peopleNum;
+
+    // 지불방법
+    private String meetPaymentType;
+
     // 챗팅방생성일
     private Date createDate;
 

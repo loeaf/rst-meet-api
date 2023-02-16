@@ -31,9 +31,10 @@ public class TasteRoomRestController {
 
     @GetMapping("")
     @ApiOperation(value = "기본 전체목록")
-    public ResponseEntity<ResResult> findAll(HttpServletRequest request, Pageable pageable) throws Exception {
+    public ResponseEntity<ResResult> findAll(HttpServletRequest request, Pageable pageable, @RequestParam String tasteRoomUuid) throws Exception {
         ResResult resResult = new ResResult();
-        resResult.setData(service.findAll());
+        Restaurant restaurant = this.restaurantService.findById(tasteRoomUuid);
+        resResult.setData(service.findByRestaurantId(restaurant));
         return ResponseEntity.ok(resResult);
     }
 
@@ -46,6 +47,8 @@ public class TasteRoomRestController {
         Restaurant restaurant = this.restaurantService.findById(tasteRoomParam.getRestaurantId());
         tasteRoom.setRestaurantId(restaurant);
         tasteRoom.setCreateDate(new Date());
+        tasteRoom.setPeopleNum(tasteRoomParam.getPeopleNum());
+        tasteRoom.setMeetPaymentType(tasteRoomParam.getMeetPaymentType());
         return ResponseEntity.ok(this.service.regist(tasteRoom));
     }
 }
