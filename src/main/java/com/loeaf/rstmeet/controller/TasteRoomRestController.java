@@ -41,6 +41,13 @@ public class TasteRoomRestController {
         ResResult resResult = new ResResult();
         Restaurant restaurant = this.restaurantService.findById(restaurantId);
         List<TasteRoom> tasteRoom = service.findByRestaurant(restaurant);
+        tasteRoom.stream().filter(tasteRoom1 -> {
+            if(!tasteRoom1.getMeetPaymentType().equals("1")) {
+                return true;
+            } else {
+                return false;
+            }
+        });
         resResult.setData(tasteRoom);
         return ResponseEntity.ok(resResult);
     }

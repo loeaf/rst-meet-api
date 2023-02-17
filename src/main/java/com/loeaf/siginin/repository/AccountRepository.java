@@ -5,7 +5,6 @@ import com.loeaf.siginin.types.AccountType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AccountRepository extends JpaRepository<Account, String> {
-    Account findByLoginId(Account userDomain);
-
+    Account findByLoginIdAndPassword(String loginId, String password);
     Account findByLoginIdAndType(String loginId, AccountType type);
 }

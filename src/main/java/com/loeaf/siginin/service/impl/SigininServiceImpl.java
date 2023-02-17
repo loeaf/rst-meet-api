@@ -33,7 +33,7 @@ public class SigininServiceImpl implements SigininService {
 
     @Transactional
     public User save(UserParam userParam) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        checkDuplication(userParam);
+//        checkDuplication(userParam);
         User user = new User();
 //        Set<Role> roles = new HashSet<>();
 //        roles.add(roleService.findByBizKey(Role.builder().authority(Authority.USER).build()));
@@ -44,6 +44,7 @@ public class SigininServiceImpl implements SigininService {
         Account account = new Account();
         account.setType(AccountType.valueOf(userParam.getAccountType()));
         account.setId(UUID.randomUUID().toString());
+        account.setLoginId(userParam.getLoginId());
         account.setPassword(passwordEncoder.encode(userParam.getPassword()));
         account.setUser(userObj);
         var accountObj = accountService.regist(account);
