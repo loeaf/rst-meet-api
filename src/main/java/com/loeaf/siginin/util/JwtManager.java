@@ -17,7 +17,7 @@ public class JwtManager {
     /**
      * Member 정보를 담은 JWT 토큰을 생성한다.
      *
-     * @param member Member 정보를 담은 객체
+     * @param account Account 정보를 담은 객체
      * @return String JWT 토큰
      */
     public String generateJwtToken(Account account) {
@@ -51,13 +51,13 @@ public class JwtManager {
     /**
      * 클레임(Claim)을 생성한다.
      *
-     * @param member 토큰을 생성하기 위한 계정 정보를 담은 객체
+     * @param account 토큰을 생성하기 위한 계정 정보를 담은 객체
      * @return Map<String, Object> 클레임(Claim)
      */
     private Map<String, Object> createClaims(Account account) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", account.getId()); // username
-        claims.put("type", account.getType()); // username
+        claims.put("type", account.getType()); // us기능 추ername
         claims.put("nickName", account.getUser().getNickName()); // username
         return claims;
     }
