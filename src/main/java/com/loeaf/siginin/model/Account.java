@@ -1,8 +1,6 @@
 package com.loeaf.siginin.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.loeaf.rstmeet.model.ReView;
-import com.loeaf.rstmeet.model.TasteRoomMember;
 import com.loeaf.siginin.types.AccountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity(name = "Account")
@@ -31,9 +28,4 @@ public class Account {
     @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReView> reViews;
-
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TasteRoomMember> attendantTasteRooms;
 }

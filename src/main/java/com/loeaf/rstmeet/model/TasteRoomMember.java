@@ -1,7 +1,7 @@
 package com.loeaf.rstmeet.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.loeaf.siginin.model.Account;
+import com.loeaf.siginin.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class TasteRoomMember {
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
-    private Account account;
+    private User user;
 
     @Column
     private Date createDate;

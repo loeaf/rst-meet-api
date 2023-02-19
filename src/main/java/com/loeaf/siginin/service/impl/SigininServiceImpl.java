@@ -9,6 +9,7 @@ import com.loeaf.siginin.service.RoleService;
 import com.loeaf.siginin.service.SigininService;
 import com.loeaf.siginin.service.UserService;
 import com.loeaf.siginin.types.AccountType;
+import com.loeaf.siginin.util.JwtManager;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class SigininServiceImpl implements SigininService {
     final AccountService accountService;
     @Autowired
     final RoleService roleService;
+    @Autowired
+    final JwtManager jwtManager;
     final PasswordEncoder passwordEncoder;
 
 
@@ -48,7 +51,13 @@ public class SigininServiceImpl implements SigininService {
         account.setPassword(passwordEncoder.encode(userParam.getPassword()));
         account.setUser(userObj);
         var accountObj = accountService.regist(account);
-        return userObj;
+        accountObj.setPassword(null);
+        return user;
+    }
+
+    public String signUp(UserParam userParam) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        var account = this.save(userParam);
+        return jwtManager.generateJwtToken(account);
     }
 
     @SneakyThrows

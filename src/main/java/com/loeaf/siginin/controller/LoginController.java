@@ -1,7 +1,8 @@
 package com.loeaf.siginin.controller;
 
+import com.loeaf.rstmeet.dto.ResResult;
 import com.loeaf.siginin.dto.param.UserParam;
-import com.loeaf.siginin.model.Account;
+import com.loeaf.siginin.model.User;
 import com.loeaf.siginin.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +19,16 @@ public class LoginController {
 
     // post login
     @PostMapping("")
-    public ResponseEntity<Object> login(HttpServletRequest request,
-                                         @RequestBody UserParam userForm) {
+    public ResponseEntity<ResResult> login(HttpServletRequest request,
+                                           @RequestBody UserParam userForm) {
         String jwt = accountService.login(userForm);
-        return ResponseEntity.ok(jwt);
+        return ResponseEntity.ok(new ResResult(jwt));
     }
 
     @GetMapping("checkJwt")
     public ResponseEntity<Object> checkJwt(HttpServletRequest request,
                                            @RequestParam String jwt) {
-        Account account = accountService.checkJwt(jwt);
+        User account = accountService.checkJwt(jwt);
         return ResponseEntity.ok(account);
     }
 }

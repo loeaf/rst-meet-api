@@ -1,5 +1,6 @@
 package com.loeaf.siginin.controller;
 
+import com.loeaf.rstmeet.dto.ResResult;
 import com.loeaf.siginin.dto.param.UserParam;
 import com.loeaf.siginin.service.SigininService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,10 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<Object> signUp(HttpServletRequest request,
-                                         @RequestBody UserParam userForm) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        return ResponseEntity.ok(sigininService.save(userForm));
+    public ResponseEntity<ResResult> signUp(HttpServletRequest request,
+                                            @RequestBody UserParam userForm) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        var result = sigininService.signUp(userForm);
+        return ResponseEntity.ok(new ResResult(result));
     }
 
 }

@@ -19,7 +19,7 @@ public class TasteRoom {
     @Id
     private String id;
     // 맛집아이디
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
     private Restaurant restaurant;

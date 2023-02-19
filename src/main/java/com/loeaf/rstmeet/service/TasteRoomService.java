@@ -6,6 +6,8 @@ import com.loeaf.rstmeet.model.TasteRoom;
 
 import java.util.List;
 
-public interface TasteRoomService extends Service<TasteRoom, String> {
-    List<TasteRoom> findByRestaurant(Restaurant restaurant);
+public interface TasteRoomService extends Service<com.loeaf.rstmeet.model.TasteRoom, String> {
+    List<com.loeaf.rstmeet.model.TasteRoom> findByRestaurant(Restaurant restaurant);
+
+    List<TasteRoom> selectTasteRoom(String restaurantId);
 }

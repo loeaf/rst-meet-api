@@ -1,8 +1,9 @@
 package com.loeaf.siginin.util;
 
-import com.loeaf.siginin.model.Account;
-import com.loeaf.siginin.types.AccountType;
-import io.jsonwebtoken.*;
+import com.loeaf.siginin.model.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -17,15 +18,15 @@ public class JwtManager {
     /**
      * Member 정보를 담은 JWT 토큰을 생성한다.
      *
-     * @param account Account 정보를 담은 객체
+     * @param user Account 정보를 담은 객체
      * @return String JWT 토큰
      */
-    public String generateJwtToken(Account account) {
+    public String generateJwtToken(User user) {
         Date now = new Date();
         return Jwts.builder()
-                .setSubject(account.getUser().getId()) // 보통 username
+                .setSubject(user.getId()) // 보통 username
                 .setHeader(createHeader())
-                .setClaims(createClaims(account)) // 클레임, 토큰에 포함될 정보
+                .setClaims(createClaims(user)) // 클레임, 토큰에 포함될 정보
                 .setExpiration(new Date(now.getTime() + expiredTime)) // 만료일
                 .signWith(SignatureAlgorithm.HS256, securityKey)
                 .compact();
@@ -51,14 +52,13 @@ public class JwtManager {
     /**
      * 클레임(Claim)을 생성한다.
      *
-     * @param account 토큰을 생성하기 위한 계정 정보를 담은 객체
+     * @param user 토큰을 생성하기 위한 계정 정보를 담은 객체
      * @return Map<String, Object> 클레임(Claim)
      */
-    private Map<String, Object> createClaims(Account account) {
+    private Map<String, Object> createClaims(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", account.getId()); // username
-        claims.put("type", account.getType()); // us기능 추ername
-        claims.put("nickName", account.getUser().getNickName()); // username
+        claims.put("userId", user.getId()); // username
+        claims.put("nickName", user.getNickName()); // username
         return claims;
     }
     /**
@@ -67,10 +67,10 @@ public class JwtManager {
      * @param token JWT 토큰
      * @return String Member 의 username
      */
-    public Account getUsernameFromToken(String token) {
-        Account account = new Account();
+    public User getAccountByToken(String token) {
+        User account = new User();
         account.setId((String) getClaims(token).get("userId"));
-        account.setType(AccountType.valueOf((String) getClaims(token).get("type")));
+        account.setNickName((String) getClaims(token).get("NickName"));
         return account;
     }
 
@@ -83,6 +83,8 @@ public class JwtManager {
 //    public Set<MemberRole> getMemberRoleSetFromToken(String token) {
 //        return (Set<MemberRole>) getClaims(token).get("roles");
 //    }
-
+    /**
+     *
+     */
 
 }

@@ -8,8 +8,10 @@ import com.loeaf.rstmeet.model.TasteRoomMember;
 import com.loeaf.rstmeet.service.RestaurantService;
 import com.loeaf.rstmeet.service.TasteRoomMemberService;
 import com.loeaf.rstmeet.service.TasteRoomService;
+import com.loeaf.siginin.dto.UserToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,8 @@ public class TasteRoomRestController {
     private TasteRoomService service;
     private RestaurantService restaurantService;
     private TasteRoomMemberService tasteRoomMemberService;
+    @Autowired
+    private UserToken userToken;
 
     public TasteRoomRestController(TasteRoomService service, RestaurantService restaurantService, TasteRoomMemberService tasteRoomMemberService) {
         this.service = service;
@@ -39,16 +43,8 @@ public class TasteRoomRestController {
     @ApiOperation(value = "기본 전체목록")
     public ResponseEntity<ResResult> findAll(HttpServletRequest request, Pageable pageable, @RequestParam String restaurantId) throws Exception {
         ResResult resResult = new ResResult();
-        Restaurant restaurant = this.restaurantService.findById(restaurantId);
-        List<TasteRoom> tasteRoom = service.findByRestaurant(restaurant);
-        tasteRoom.stream().filter(tasteRoom1 -> {
-            if(!tasteRoom1.getMeetPaymentType().equals("1")) {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        resResult.setData(tasteRoom);
+        List<TasteRoom> tasteRooms = service.selectTasteRoom(restaurantId);
+        resResult.setData(tasteRooms);
         return ResponseEntity.ok(resResult);
     }
 
@@ -61,6 +57,8 @@ public class TasteRoomRestController {
         tasteRoom.setContent(tasteRoomParam.getContent());
         Restaurant restaurant = this.restaurantService.findById(tasteRoomParam.getRestaurantId());
         tasteRoom.setRestaurant(restaurant);
+        var user = this.userToken.findUserByDb();
+        tasteRoom.setUser(user);
         tasteRoom.setCreateDate(new Date());
         tasteRoom.setPeopleNum(tasteRoomParam.getPeopleNum());
         tasteRoom.setMeetPaymentType(tasteRoomParam.getMeetPaymentType());
@@ -68,6 +66,7 @@ public class TasteRoomRestController {
         TasteRoomMember tasteRoomMember = new TasteRoomMember();
         tasteRoomMember.setId(UUID.randomUUID().toString());
         tasteRoomMember.setTasteRoom(tasteRoom);
+        tasteRoomMember.setUser(user);
         tasteRoomMember.setCreateDate(new Date());
         this.tasteRoomMemberService.regist(tasteRoomMember);
         return ResponseEntity.ok(result);

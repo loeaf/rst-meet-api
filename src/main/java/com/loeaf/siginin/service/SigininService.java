@@ -7,4 +7,5 @@ import java.lang.reflect.InvocationTargetException;
 
 public interface SigininService {
     User save(UserParam user) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+    String signUp(UserParam user) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 }
