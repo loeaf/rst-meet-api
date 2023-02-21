@@ -22,12 +22,21 @@ public class GlobalHttpInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // Get the Authorization header from the request
+
+        //로그인 경로 제외
+        if(request.getRequestURI().contains("/login") ||
+                request.getRequestURI().contains("/signUp") ||
+                request.getRequestURI().contains("/logout") ||
+                request.getRequestURI().contains("/resources")){
+            return true;
+        }
+
         String authHeader = request.getHeader("Authorization");
 
         // Check if the Authorization header is present and starts with "Bearer"
-        if (authHeader != null && authHeader.startsWith("Basic")) {
+        if (authHeader != null && authHeader.startsWith("Bearer")) {
             // Extract the JWT token from the Authorization header
-            String jwtToken = authHeader.substring(6);
+            String jwtToken = authHeader.substring(7);
             // Use the JWT token for authentication or other purposes
             // For example, you can decode the token using a library like jjwt
             User account = this.jwtManager.getAccountByToken(jwtToken);

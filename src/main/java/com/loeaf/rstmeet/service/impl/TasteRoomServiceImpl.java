@@ -1,6 +1,7 @@
 package com.loeaf.rstmeet.service.impl;
 
 import com.loeaf.common.misc.ServiceImpl;
+import com.loeaf.rstmeet.mapper.TasteRoomMapper;
 import com.loeaf.rstmeet.model.Restaurant;
 import com.loeaf.rstmeet.model.TasteRoom;
 import com.loeaf.rstmeet.repository.TasteRoomRepository;
@@ -18,7 +19,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TasteRoomServiceImpl
-        extends ServiceImpl<TasteRoomRepository, com.loeaf.rstmeet.model.TasteRoom, String>
+        extends ServiceImpl<TasteRoomRepository, TasteRoom, String>
         implements TasteRoomService {
     private final TasteRoomRepository jpaRepo;
     @Autowired
@@ -26,23 +27,33 @@ public class TasteRoomServiceImpl
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    TasteRoomMapper tasteRoomMapper;
+
     @PostConstruct
     private void init() {
-        super.set(jpaRepo, new com.loeaf.rstmeet.model.TasteRoom());
+        super.set(jpaRepo, new TasteRoom());
     }
 
     @Override
-    public List<com.loeaf.rstmeet.model.TasteRoom> findByRestaurant(Restaurant restaurant) {
+    public List<TasteRoom> findByRestaurant(Restaurant restaurant) {
         System.out.println(userToken.getUser().toString());
         User user = userToken.findUserByDb();
-        List<com.loeaf.rstmeet.model.TasteRoom> tasteRooms = this.jpaRepo.findByRestaurantAndUserNot(restaurant, user);
+        List<TasteRoom> tasteRooms = this.jpaRepo.findByRestaurantAndUserNot(restaurant, user);
         return tasteRooms;
     }
 
     @Override
     public List<TasteRoom> selectTasteRoom(String restaurantId) {
         String userId = userToken.getUser().getId();
-        List<TasteRoom> result = jpaRepo.findTasteRoom(restaurantId, userId);
+        List<TasteRoom> result = tasteRoomMapper.findTasteRoomByRestAndNotMe(restaurantId, userId);
+        return result;
+    }
+
+    @Override
+    public List<TasteRoom> findTasteRoomByMe() {
+        String userId = userToken.getUser().getId();
+        List<TasteRoom> result = tasteRoomMapper.findTasteRoomByMe(userId);
         return result;
     }
 }

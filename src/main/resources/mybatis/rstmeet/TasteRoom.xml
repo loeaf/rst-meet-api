@@ -2,11 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.loeaf.rstmeet.repository.TasteRoomMapper">
+<mapper namespace="com.loeaf.rstmeet.mapper.TasteRoomMapper">
 
     <select id="findTasteRoom" resultType="com.loeaf.rstmeet.model.TasteRoom">
         select A.* from taste_room A, taste_room_member B
         where A.id = B.taste_room_id and B.user_id != #{userId}
         and A.restaurant_id = #{restaurantId}
+    </select>
+
+    <select id="findTasteRoomByRestAndNotMe" resultType="com.loeaf.rstmeet.model.TasteRoom">
+        select
+        A.*
+        from
+        RSTMMET.taste_room A
+        where A.restaurant_id = #{restaurantId}
+        and A.id not in (
+        select DISTINCT taste_room_id
+        from RSTMMET.taste_room_member
+        where user_id = #{userId})
+    </select>
+
+    <select id="findTasteRoomByMe" resultType="com.loeaf.rstmeet.model.TasteRoom">
+        select
+        A.*
+        from
+        RSTMMET.taste_room A
+        where
+        A.id in
+        (select DISTINCT taste_room_id
+        from RSTMMET.taste_room_member
+        where user_id = #{userId})
+        order by content;
     </select>
 </mapper>

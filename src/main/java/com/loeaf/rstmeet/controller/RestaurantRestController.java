@@ -2,6 +2,7 @@ package com.loeaf.rstmeet.controller;
 
 import com.loeaf.rstmeet.dto.ResResult;
 import com.loeaf.rstmeet.dto.params.RestaurantParam;
+import com.loeaf.rstmeet.model.Restaurant;
 import com.loeaf.rstmeet.service.RestaurantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/Restaurant")
@@ -28,10 +30,12 @@ public class RestaurantRestController {
     public ResponseEntity<ResResult> findAll(HttpServletRequest request, RestaurantParam params) throws Exception {
         ResResult resResult = new ResResult();
         if (params.getId() != null) {
-            resResult.setData(service.findById(params.getId()));
+            Restaurant restaurants = service.findById(params.getId());
+            resResult.setData(restaurants);
             return ResponseEntity.ok(resResult);
         } else {
-            resResult.setData(service.findAll());
+            List<Restaurant> restaurantList = service.findRestaurant(null);
+            resResult.setData(restaurantList);
             return ResponseEntity.ok(resResult);
         }
     }

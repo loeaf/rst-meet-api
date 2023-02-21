@@ -10,7 +10,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@Entity(name = "Account")
+@Table(name = "Account",
+        uniqueConstraints={
+                @UniqueConstraint(
+                        name= "AccountUnique",
+                        columnNames = {"loginId", "type"}
+                )}
+        )
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

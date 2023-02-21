@@ -48,6 +48,14 @@ public class TasteRoomRestController {
         return ResponseEntity.ok(resResult);
     }
 
+    @GetMapping("/my")
+    public ResponseEntity<ResResult> myTasteRoom(HttpServletRequest request, Pageable pageable) throws Exception {
+        ResResult resResult = new ResResult();
+        List<TasteRoom> tasteRooms = service.findTasteRoomByMe();
+        resResult.setData(tasteRooms);
+        return ResponseEntity.ok(resResult);
+    }
+
     @PostMapping()
     @ApiOperation(value = "등록")
     @Transactional

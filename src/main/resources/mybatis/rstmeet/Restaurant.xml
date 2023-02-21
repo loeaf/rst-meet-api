@@ -2,5 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.loeaf.rstmeet.repository.RestaurantMapper">
+<mapper namespace="com.loeaf.rstmeet.mapper.RestaurantMapper">
+
+    <select id="findRestaurant" resultType="com.loeaf.rstmeet.model.Restaurant">
+        select * from RSTMMET.restaurant
+        <where>
+            1 = 1
+            <if test="restaurantId != null">
+                and id = #{restaurantId}
+            </if>
+        </where>
+    </select>
 </mapper>

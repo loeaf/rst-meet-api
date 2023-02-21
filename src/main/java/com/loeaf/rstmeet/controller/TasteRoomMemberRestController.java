@@ -6,9 +6,12 @@ import com.loeaf.rstmeet.model.TasteRoom;
 import com.loeaf.rstmeet.model.TasteRoomMember;
 import com.loeaf.rstmeet.service.TasteRoomMemberService;
 import com.loeaf.rstmeet.service.TasteRoomService;
+import com.loeaf.siginin.dto.UserToken;
+import com.loeaf.siginin.model.User;
 import com.loeaf.siginin.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,8 @@ public class TasteRoomMemberRestController {
     private TasteRoomMemberService service;
     private TasteRoomService tasteRoomService;
     private AccountService accountService;
+    @Autowired
+    private UserToken userToken;
 
     public TasteRoomMemberRestController(TasteRoomMemberService service, TasteRoomService tasteRoomService, AccountService accountService) {
         this.service = service;
@@ -46,7 +51,8 @@ public class TasteRoomMemberRestController {
         TasteRoom tr = this.tasteRoomService.findById(tasteRoomMemberParam.getTasteRoomId());
         tasteRoomMember.setTasteRoom(tr);
 //        Account ac = this.accountService.findById(tasteRoomMemberParam.getAccountId());
-//        tasteRoomMember.setAccount(ac);
+        User user = userToken.findUserByDb();
+        tasteRoomMember.setUser(user);
         tasteRoomMember.setCreateDate(new Date());
         TasteRoomMember result = service.regist(tasteRoomMember);
         return ResponseEntity.ok(new ResResult(result));

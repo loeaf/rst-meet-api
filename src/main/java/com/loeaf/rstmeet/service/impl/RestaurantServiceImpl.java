@@ -3,9 +3,11 @@ package com.loeaf.rstmeet.service.impl;
 import com.loeaf.common.misc.ServiceImpl;
 import com.loeaf.rstmeet.dto.RstMeetFile;
 import com.loeaf.rstmeet.model.Restaurant;
+import com.loeaf.rstmeet.mapper.RestaurantMapper;
 import com.loeaf.rstmeet.repository.RestaurantRepository;
 import com.loeaf.rstmeet.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
@@ -24,6 +26,8 @@ public class RestaurantServiceImpl
         extends ServiceImpl<RestaurantRepository, Restaurant, String>
         implements RestaurantService {
     private final RestaurantRepository jpaRepo;
+    @Autowired
+    private final RestaurantMapper restaurantMapper;
 
     @PostConstruct
     private void init() {
@@ -53,6 +57,12 @@ public class RestaurantServiceImpl
             rst.setRepresentativeMenu(p.getRepresentativeMenu());
             this.jpaRepo.save(rst);
         });
+    }
+
+    @Override
+    public List<Restaurant> findRestaurant(String restaurantId) {
+        List<Restaurant> restaurantList = restaurantMapper.findRestaurant(restaurantId);
+        return restaurantList;
     }
 
     private List<RstMeetFile> readCSVByClassPath() throws FileNotFoundException {
