@@ -35,8 +35,8 @@ public class BoardDatabaseConfig {
     public SqlSessionFactory boardSqlSessionFactory(@Qualifier("dataSource") DataSource dataSource, ApplicationContext context) throws Exception{
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml"));
-        sqlSessionFactoryBean.setMapperLocations(context.getResources("classpath*:mybatis/**/*.xml"));
+        sqlSessionFactoryBean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis/mybatis-config.xml"));
+        sqlSessionFactoryBean.setMapperLocations(context.getResources("classpath*:mybatis/mapper/**/*.xml"));
         SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
         log.info("<< {}", ToStringBuilder.reflectionToString(sqlSessionFactory));
 
