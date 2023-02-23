@@ -1,10 +1,7 @@
 package com.loeaf.rstmeet.controller;
 
 import com.loeaf.rstmeet.model.CmmnCode;
-import com.loeaf.rstmeet.service.CmmnCodeService;
-import com.loeaf.rstmeet.service.MenuService;
-import com.loeaf.rstmeet.service.ReViewService;
-import com.loeaf.rstmeet.service.RestaurantService;
+import com.loeaf.rstmeet.service.*;
 import com.loeaf.rstmeet.type.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,16 +22,19 @@ public class DefaultDataRestController {
     private ReViewService reViewService;
     private MenuService menuService;
     private CmmnCodeService cmmnCodeService;
+    private MediaService mediaService;
 
     public DefaultDataRestController(RestaurantService service,
                                      ReViewService reViewService,
                                      MenuService menuService,
-                                     CmmnCodeService cmmnCodeService
+                                     CmmnCodeService cmmnCodeService,
+                                     MediaService mediaService
     ) {
         this.restaurantService = service;
         this.reViewService = reViewService;
         this.menuService = menuService;
         this.cmmnCodeService = cmmnCodeService;
+        this.mediaService = mediaService;
     }
     // NATION POST
     @GetMapping("/NATION")
@@ -192,6 +192,13 @@ public class DefaultDataRestController {
     @ApiOperation(value = "등록")
     public ResponseEntity<Object> menuBulkInsert(HttpServletRequest request) throws Exception {
         this.menuService.registBulkByCSV();
+        return null;
+    }
+
+    @GetMapping("/mediaBulkInsert")
+    @ApiOperation(value = "등록")
+    public ResponseEntity<Object> mediaBulkInsert(HttpServletRequest request) throws Exception {
+        this.mediaService.registBulkByCSV();
         return null;
     }
 }

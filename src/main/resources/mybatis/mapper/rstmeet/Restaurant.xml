@@ -4,12 +4,13 @@
 
 <mapper namespace="com.loeaf.rstmeet.mapper.RestaurantMapper">
 
-    <select id="findRestaurant" resultType="com.loeaf.rstmeet.model.Restaurant">
-        select * from RSTMMET.restaurant
+    <select id="findRestaurant" resultType="com.loeaf.rstmeet.model.RestaurantDto">
+        select A.*, B.path imagePath, B.name imageName from RSTMMET.restaurant AS A LEFT JOIN RSTMMET.media AS B
+        ON A.id = B.restaurant_id
         <where>
             1 = 1
             <if test="restaurantId != null">
-                and id = #{restaurantId}
+                and A.id = #{restaurantId}
             </if>
         </where>
     </select>
