@@ -24,9 +24,16 @@ private void init(){
         }
 
     @Override
-    public List<CmmnCode> findCity() {
+    public List<CmmnCode> findCity(CountryType countryType) {
         var cd = new CmmnCode();
-        cd.setId(CountryType.일본.getName());
+        cd.setId(countryType.getName());
         return jpaRepo.findCmmnCodeByParentCode(cd);
+    }
+
+    @Override
+    public List<CmmnCode> findNation() {
+    var cd = new CmmnCode();
+    cd.setId("NATION");
+    return jpaRepo.findCmmnCodeByParentCode(cd);
     }
 }

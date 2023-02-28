@@ -49,6 +49,7 @@ public class JwtManager {
         return Jwts.parser().setSigningKey(securityKey).parseClaimsJws(token).getBody();
     }
 
+
     /**
      * 클레임(Claim)을 생성한다.
      *

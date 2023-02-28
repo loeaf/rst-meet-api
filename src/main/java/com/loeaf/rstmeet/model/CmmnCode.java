@@ -26,12 +26,12 @@ public class CmmnCode {
     @OneToMany(mappedBy = "parentCode", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CmmnCode> cmmnCodeList;
 
-    @OneToMany(mappedBy = "countryType", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "countryType", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Restaurant> restaurantsList;
 
-    @OneToMany(mappedBy = "cityType", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cityType", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Restaurant> cityList;
 
-    @OneToMany(mappedBy = "menuType", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "menuType", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Menu> menuList;
 }
