@@ -34,7 +34,7 @@ public abstract class SampleDataParserService implements FileParser {
             while((line = br.readLine()) != null){
                 //CSV 1행을 저장하는 리스트
                 List<String> tmpList = new ArrayList<String>();
-                String array[] = line.split(",");
+                String array[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 //배열에서 리스트 반환
                 tmpList = Arrays.asList(array);
                 System.out.println(tmpList);

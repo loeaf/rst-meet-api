@@ -70,7 +70,7 @@ public class ReViewServiceImpl
                 }
                 //CSV 1행을 저장하는 리스트
                 List<String> tmpList = new ArrayList<String>();
-                String array[] = line.split(",");
+                String array[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 var rstMeetFile = new ReviewFile();
                 // 식당번호
                 rstMeetFile.setRestaurantId(Integer.parseInt(array[0]));

@@ -74,7 +74,7 @@ public class MediaServiceImpl
                 }
                 //CSV 1행을 저장하는 리스트
                 List<String> tmpList = new ArrayList<String>();
-                String array[] = line.split(",");
+                String array[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 var rstMeetMediaFile = new MediaFile();
                 // 식당번호
                 rstMeetMediaFile.setMediaId(Integer.parseInt(array[0]));

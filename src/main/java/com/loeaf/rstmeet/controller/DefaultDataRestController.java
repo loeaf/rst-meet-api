@@ -71,9 +71,14 @@ public class DefaultDataRestController {
         child2.setParentCode(cmmnCodeService.findById(CountryType.한국.getName()));
         child2.setCodeName(CityType.서울.toString());
         cmmnCodeService.regist(child2);
+        CmmnCode sejong = new CmmnCode();
+        sejong.setId(CityType.세종.getName());
+        sejong.setParentCode(cmmnCodeService.findById(CountryType.한국.getName()));
+        sejong.setCodeName(CityType.세종.toString());
+        cmmnCodeService.regist(sejong);
         CmmnCode child3 = new CmmnCode();
         child3.setId(CityType.교토.getName());
-        child2.setParentCode(cmmnCodeService.findById(CountryType.일본.getName()));
+        child3.setParentCode(cmmnCodeService.findById(CountryType.일본.getName()));
         child3.setCodeName(CityType.교토.toString());
         cmmnCodeService.regist(child3);
         CmmnCode child4 = new CmmnCode();

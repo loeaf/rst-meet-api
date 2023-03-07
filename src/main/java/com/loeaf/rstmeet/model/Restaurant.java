@@ -37,10 +37,10 @@ public class Restaurant {
     private String miniAddress;
     // 위도
     @Column
-    private Long latitude;
+    private Double latitude;
     // 경도
     @Column
-    private Long longitude;
+    private Double longitude;
     // 지리정보
     @Column
     private Point  geoInfo;

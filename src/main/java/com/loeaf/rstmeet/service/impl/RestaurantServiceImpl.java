@@ -2,8 +2,8 @@ package com.loeaf.rstmeet.service.impl;
 
 import com.loeaf.common.misc.ServiceImpl;
 import com.loeaf.rstmeet.dto.RstMeetFile;
-import com.loeaf.rstmeet.model.Restaurant;
 import com.loeaf.rstmeet.mapper.RestaurantMapper;
+import com.loeaf.rstmeet.model.Restaurant;
 import com.loeaf.rstmeet.repository.RestaurantRepository;
 import com.loeaf.rstmeet.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,8 +47,8 @@ public class RestaurantServiceImpl
             rst.setJibunAddress(p.getKoreanJibunAddress());
             rst.setEnglishAddress(p.getEnglishAddress());
             rst.setMiniAddress(p.getArea());
-            rst.setLatitude(new BigDecimal(p.getLat()).longValue());
-            rst.setLongitude(new BigDecimal(p.getLog()).longValue());
+            rst.setLatitude(Double.parseDouble(p.getLat()));
+            rst.setLongitude(Double.parseDouble(p.getLog()));
             rst.setGeoInfo(null);
             rst.setRegDate(new Date());
             rst.setPhoneNumber(p.getPhoneNumber());
@@ -88,7 +87,8 @@ public class RestaurantServiceImpl
                 }
                 //CSV 1행을 저장하는 리스트
                 List<String> tmpList = new ArrayList<String>();
-                String array[] = line.split(",");
+                String array[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+                System.out.println(line);
                 var rstMeetFile = new RstMeetFile();
                 rstMeetFile.setRstMeetFileNumber(Integer.parseInt(array[0]));
                 rstMeetFile.setCategory(array[1]);
