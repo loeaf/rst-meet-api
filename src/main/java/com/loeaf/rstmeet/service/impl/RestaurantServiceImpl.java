@@ -39,6 +39,11 @@ public class RestaurantServiceImpl
         List<RstMeetFile> rstMeetFileList = this.readCSVByClassPath();
         rstMeetFileList.forEach(p -> {
             System.out.println(p.toString());
+            List<Restaurant> restaurantList =  this.jpaRepo.findByRoadAddressAndName(p.getKoreanRoadAddress(), p.getRestaurant());
+            if(restaurantList.size() > 0) {
+                System.out.println("Already Exist" + p.toString());
+                return;
+            }
             var rst = new Restaurant();
             rst.setId(UUID.randomUUID().toString());
             rst.setRestaurantNumber(p.getRstMeetFileNumber());
@@ -53,6 +58,7 @@ public class RestaurantServiceImpl
             rst.setRegDate(new Date());
             rst.setPhoneNumber(p.getPhoneNumber());
             rst.setHoliday(p.getHoliday());
+            rst.setRefinedGeoLocation(0);
             rst.setRepresentativeMenu(p.getRepresentativeMenu());
             this.jpaRepo.save(rst);
         });
@@ -62,6 +68,12 @@ public class RestaurantServiceImpl
     public List<Restaurant> findRestaurant(String restaurantId) {
         List<Restaurant> restaurantList = restaurantMapper.findRestaurant(restaurantId);
         return restaurantList;
+    }
+
+    @Override
+    public List<Restaurant> findRestaurantByRoadAddress(String roadAddress, String name) {
+        List<Restaurant> restaurantList = jpaRepo.findByRoadAddressAndName(roadAddress, name);
+        return null;
     }
 
     private List<RstMeetFile> readCSVByClassPath() throws FileNotFoundException {
@@ -101,8 +113,13 @@ public class RestaurantServiceImpl
                 rstMeetFile.setKoreanJibunAddress(array[8]);
                 rstMeetFile.setEnglishAddress(array[9]);
                 rstMeetFile.setSpecAddr(array[10]);
-                rstMeetFile.setLog(array[11]);
-                rstMeetFile.setLat(array[12]);
+                if (array.length > 12) {
+                    rstMeetFile.setLog(array[11]);
+                    rstMeetFile.setLat(array[12]);
+                } else {
+                    rstMeetFile.setLog("0");
+                    rstMeetFile.setLat("0");
+                }
                 System.out.println(rstMeetFile.toString());
                 rstMeetFileList.add(rstMeetFile);
             }

@@ -56,6 +56,10 @@ public class Restaurant {
     // 대표메뉴
     @Column
     private String representativeMenu;
+
+    @Column(columnDefinition = "int default 0")
+    private Integer refinedGeoLocation;
+    // 대표메뉴
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference

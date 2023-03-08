@@ -10,4 +10,6 @@ public interface RestaurantService extends Service<Restaurant, String> {
     void registBulkByCSV() throws FileNotFoundException;
 
     List<Restaurant> findRestaurant(String restaurantId);
+
+    List<Restaurant> findRestaurantByRoadAddress(String roadAddress, String name);
 }
