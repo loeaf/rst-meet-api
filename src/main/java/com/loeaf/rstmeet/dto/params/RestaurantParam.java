@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RestaurantParam {
     private String id;
+    private Double longitude;
+    private Double latitude;
 }

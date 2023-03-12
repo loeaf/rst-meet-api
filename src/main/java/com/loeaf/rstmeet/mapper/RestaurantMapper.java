@@ -1,12 +1,14 @@
 package com.loeaf.rstmeet.mapper;
 
-import com.loeaf.rstmeet.model.Restaurant;
+import com.loeaf.rstmeet.dto.params.RestaurantParam;
+import com.loeaf.rstmeet.model.RestaurantDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface RestaurantMapper {
-    public List<Restaurant> findRestaurant(@Param("restaurantId") String restaurantId);
+    List<RestaurantDto> findRestaurant(RestaurantParam o);
+
+    List<RestaurantDto> findNearestRestaurant(RestaurantParam o);
 }

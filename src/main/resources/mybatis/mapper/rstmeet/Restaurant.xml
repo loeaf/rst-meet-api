@@ -3,15 +3,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.loeaf.rstmeet.mapper.RestaurantMapper">
-
     <select id="findRestaurant" resultType="com.loeaf.rstmeet.model.RestaurantDto">
-        select A.*, B.path imagePath, B.name imageName from RSTMMET.restaurant AS A LEFT JOIN RSTMMET.media AS B
+        select A.*, B.path imagePath, B.name imageName
+        <if test="longitude != null and latitude != null">
+            , ST_DistanceSphere(
+            geo_info,
+            ST_SetSRID(ST_MakePoint(#{longitude}, #{latitude}), 4326)
+            ) / 1000 AS distance
+        </if>
+        from restaurant AS A LEFT JOIN media AS B
         ON A.id = B.restaurant_id
         <where>
             1 = 1
-            <if test="restaurantId != null">
-                and A.id = #{restaurantId}
+            <!-- if longitude, latitude -->
+            <if test="longitude != null and latitude != null">
+            <![CDATA[
+                AND ST_DistanceSphere(
+                geo_info,
+                ST_SetSRID(ST_MakePoint(#{longitude}, #{latitude}), 4326)
+                ) / 1000 < 5
+            ]]>
+            </if>
+            <if test="id != null">
+                and A.id = #{id}
             </if>
         </where>
+        <if test="longitude != null and latitude != null">
+            order by distance
+        </if>
+    </select>
+
+    <select id="findNearestRestaurant" resultType="com.loeaf.rstmeet.model.RestaurantDto">
     </select>
 </mapper>

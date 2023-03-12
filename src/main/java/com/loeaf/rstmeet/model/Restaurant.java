@@ -1,10 +1,10 @@
 package com.loeaf.rstmeet.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.vividsolutions.jts.geom.Geometry;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.geo.Point;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -41,9 +41,10 @@ public class Restaurant {
     // 경도
     @Column
     private Double longitude;
+
     // 지리정보
-    @Column
-    private Point  geoInfo;
+    @Column(name = "geoInfo")
+    private Geometry geoInfo;
     // 등록일
     @Column
     private Date regDate;

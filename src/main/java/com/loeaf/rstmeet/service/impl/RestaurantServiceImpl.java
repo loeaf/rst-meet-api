@@ -2,8 +2,10 @@ package com.loeaf.rstmeet.service.impl;
 
 import com.loeaf.common.misc.ServiceImpl;
 import com.loeaf.rstmeet.dto.RstMeetFile;
+import com.loeaf.rstmeet.dto.params.RestaurantParam;
 import com.loeaf.rstmeet.mapper.RestaurantMapper;
 import com.loeaf.rstmeet.model.Restaurant;
+import com.loeaf.rstmeet.model.RestaurantDto;
 import com.loeaf.rstmeet.repository.RestaurantRepository;
 import com.loeaf.rstmeet.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -65,8 +67,8 @@ public class RestaurantServiceImpl
     }
 
     @Override
-    public List<Restaurant> findRestaurant(String restaurantId) {
-        List<Restaurant> restaurantList = restaurantMapper.findRestaurant(restaurantId);
+    public List<RestaurantDto> findRestaurant(RestaurantParam restaurant) {
+        List<RestaurantDto> restaurantList = restaurantMapper.findRestaurant(restaurant);
         return restaurantList;
     }
 
@@ -74,6 +76,12 @@ public class RestaurantServiceImpl
     public List<Restaurant> findRestaurantByRoadAddress(String roadAddress, String name) {
         List<Restaurant> restaurantList = jpaRepo.findByRoadAddressAndName(roadAddress, name);
         return null;
+    }
+
+    @Override
+    public List<RestaurantDto> findNearestRestaurant(RestaurantParam o) {
+        List<RestaurantDto> restaurantList = restaurantMapper.findNearestRestaurant(o);
+        return restaurantList;
     }
 
     private List<RstMeetFile> readCSVByClassPath() throws FileNotFoundException {

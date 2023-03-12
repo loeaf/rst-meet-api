@@ -14,11 +14,11 @@
         select
         A.*
         from
-        RSTMMET.taste_room A
+        taste_room A
         where A.restaurant_id = #{restaurantId}
         and A.id not in (
         select DISTINCT taste_room_id
-        from RSTMMET.taste_room_member
+        from taste_room_member
         where user_id = #{userId})
     </select>
 
@@ -26,11 +26,11 @@
         select
         A.*
         from
-        RSTMMET.taste_room A
+        taste_room A
         where
         A.id in
         (select DISTINCT taste_room_id
-        from RSTMMET.taste_room_member
+        from taste_room_member
         where user_id = #{userId})
         order by content;
     </select>

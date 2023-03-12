@@ -25,9 +25,11 @@ public class RestaurantDto {
     // 요약주소
     private String miniAddress;
     // 위도
-    private Long latitude;
+    private Double latitude;
     // 경도
-    private Long longitude;
+    private Double longitude;
+    // 거리
+    private Double distance;
     // 지리정보
     private Point  geoInfo;
     // 등록일

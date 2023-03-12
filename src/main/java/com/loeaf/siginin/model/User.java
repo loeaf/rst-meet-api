@@ -12,17 +12,17 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "user")
+@Entity(name = "tn_user")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
-    @Column()
+    @Column
 //    @BizField(bizKey = true, order = 0)
     private String id;
-    @Column()
+    @Column
     private String nickName;
 //    @ManyToMany
 //    @JoinTable(name = "user_role",
