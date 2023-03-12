@@ -39,7 +39,7 @@ public class ReViewServiceImpl
         // save to db
         menuFiles.forEach(p -> {
             var review = new ReView();
-            Restaurant restaurantObj = restaurantRepository.findByRestaurantNumber(p.getRestaurantId());
+            Restaurant restaurantObj = restaurantRepository.findByRestaurantNumber(1);
             review.setId(UUID.randomUUID().toString());
             review.setContent(p.getContent());
             review.setIsMain(p.getIsMain());
