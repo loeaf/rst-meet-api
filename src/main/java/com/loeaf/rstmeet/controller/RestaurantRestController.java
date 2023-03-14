@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -28,12 +25,13 @@ public class RestaurantRestController {
         this.service = service;
     }
 
-    @GetMapping()
+    @PostMapping()
     @ApiOperation(value = "기본 전체목록")
-    public ResponseEntity<ResResult> findAll(HttpServletRequest request, RestaurantParam params) throws Exception {
+    public ResponseEntity<ResResult> findAll(HttpServletRequest request, @RequestBody RestaurantParam params) throws Exception {
         ResResult resResult = new ResResult();
-        params.setLongitude(127.28782174876);
-        params.setLatitude(36.477895749037);
+//        params.setLongitude(127.28782174876);
+//        params.setLatitude(36.477895749037);
+        System.out.println(params.toString());
         if (params.getId() != null) {
             Restaurant restaurants = service.findById(params.getId());
             resResult.setData(restaurants);
